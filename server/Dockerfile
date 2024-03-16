@@ -9,4 +9,4 @@ COPY src src
 
 RUN ./mvnw clean package -DskipTests
 
-ENTRYPOINT ["java", "-jar", "target/server-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "target/server-3.2.3.jar"]
