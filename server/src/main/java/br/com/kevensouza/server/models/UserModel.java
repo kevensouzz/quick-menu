@@ -2,27 +2,18 @@ package br.com.kevensouza.server.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "users")
 @Table(name = "users")
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id", callSuper = false)
-public class UserModel extends RepresentationModel<UserModel> implements UserDetails, Serializable {
+public class UserModel extends RepresentationModel<UserModel> implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
