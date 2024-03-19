@@ -1,0 +1,10 @@
+#banner {
+  color: red;
+  font-size: 3rem;
+  font-weight: 700;
+
+  span {
+    font-weight: 300;
+    color: red;
+  }
+}
