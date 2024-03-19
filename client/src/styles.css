@@ -21,7 +21,6 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--bg-color);
-  padding-top: 80px;
 }
 
 .no-focus:focus-visible {
