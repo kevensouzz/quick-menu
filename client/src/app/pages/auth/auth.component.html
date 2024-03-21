@@ -1,1 +1,41 @@
-<p>auth works!</p>
+<main>
+  <form method="post">
+    <span id="banner">
+      <h1>QUICKMENU</h1>
+      <img ngSrc="assets/svg/utensils-crossed.svg" height="28" width="28" priority alt="quickmenu's logo">
+    </span>
+
+    <div>
+      <div class="fields">
+
+        @if (!hasAccount) {
+        <span>
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" autocomplete="on" required>
+        </span>
+        }
+        <span>
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" autocomplete="on" required>
+        </span>
+        <span>
+          <label for="password">Senha</label>
+          <input type="password" name="password" id="password" autocomplete="on" required>
+        </span>
+      </div>
+
+      <div class="buttons">
+        <button type="submit">
+          ENVIAR
+        </button>
+        <button type="button" (click)="toggleHasAccount()">
+          @if (hasAccount) {
+          Ainda não tem uma conta? Clique aqui!
+          } @else {
+          Já tem uma conta? Clique aqui!
+          }
+        </button>
+      </div>
+    </div>
+  </form>
+</main>

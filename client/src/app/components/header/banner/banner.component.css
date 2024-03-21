@@ -8,3 +8,21 @@
     color: red;
   }
 }
+
+@media screen and (max-width: 768px) {
+  #banner {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  * {
+    cursor: default;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  #banner {
+    font-size: 1.5rem;
+  }
+}

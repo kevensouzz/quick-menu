@@ -9,6 +9,6 @@ export const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "scan", component: ScanComponent },
   { path: "generate", component: GenerateComponent },
-  { path: "auth", component: AuthComponent },
+  { path: "generate/auth", component: AuthComponent },
   { path: "**", component: NotFoundComponent }
 ];
