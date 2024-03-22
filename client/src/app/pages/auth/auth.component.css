@@ -95,7 +95,7 @@ main {
           background: white;
           border: white 3px solid;
           color: red;
-          font-size: 2rem;
+          font-size: 1.8rem;
           font-weight: 600;
           transition: all 250ms linear;
           display: flex;
@@ -103,8 +103,15 @@ main {
           align-items: center;
         }
 
-        button[type="submit"]:hover,
-        button[type="submit"]:focus-visible {
+        button[type="submit"]:disabled {
+          background-color: rgb(100, 100, 100);
+          border: rgb(100, 100, 100) 3px solid;
+          color: rgb(100, 0, 0);
+          outline: none;
+        }
+
+        button[type="submit"].enable:hover,
+        button[type="submit"].enable:focus-visible {
           outline: none;
           background-color: red;
           border: red 3px solid;
@@ -117,6 +124,7 @@ main {
           width: fit-content;
           height: fit-content;
           color: red;
+          font-weight: 300;
           font-size: 1.5rem;
         }
 

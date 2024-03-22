@@ -1,5 +1,6 @@
 <main>
-  <form method="post">
+  <form method="post" [formGroup]="hasAccount ? login : register"
+    (submit)="hasAccount ? loginSubmit() : registerSubmit()">
     <span id="banner">
       <h1>QUICKMENU</h1>
       <img ngSrc="assets/svg/utensils-crossed.svg" height="28" width="28" priority alt="quickmenu's logo">
@@ -11,20 +12,23 @@
       <div class="fields">
         <span>
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="exemple@email.com" autocomplete="on">
+          <input type="email" name="email" id="email" placeholder="exemple@email.com" autocomplete="on"
+            formControlName="email">
         </span>
         <span>
           <label for="username">Username</label>
-          <input type="text" name="username" id="username" placeholder="username_example" autocomplete="on">
+          <input type="text" name="username" id="username" placeholder="username_example" autocomplete="on"
+            formControlName="username">
         </span>
         <span>
           <label for="password">Senha</label>
-          <input type="password" name="password" id="password" placeholder="p@SSw0rd_3X4MPLe" autocomplete="on">
+          <input type="password" name="password" id="password" placeholder="p@SSw0rd_3X4MPLe" autocomplete="on"
+            formControlName="password">
         </span>
       </div>
 
       <div class="buttons">
-        <button type="submit">
+        <button type="submit" [className]="register.valid && 'enable'" [disabled]="!register.valid">
           ENVIAR
         </button>
         <button type="button" (click)="toggleHasAccount()">
@@ -35,19 +39,21 @@
       <div class="fields">
         <span>
           <label for="username">Username</label>
-          <input type="text" name="username" id="username" placeholder="username_example" autocomplete="on">
+          <input type="text" name="username" id="username" placeholder="my_username123" autocomplete="on"
+            formControlName="username">
         </span>
         <span>
           <label for="password">Senha</label>
-          <input type="password" name="password" id="password" placeholder="p@SSw0rd_3X4MPLe" autocomplete="on">
+          <input type="password" name="password" id="password" placeholder="MY_p@SSw0rd" autocomplete="on"
+            formControlName="password">
         </span>
       </div>
 
       <div class="buttons">
-        <button class="" type="submit">
+        <button type="submit" [className]="login.valid && 'enable'" [disabled]="!login.valid">
           ENVIAR
         </button>
-        <button class="" type="button" (click)="toggleHasAccount()">
+        <button type="button" (click)="toggleHasAccount()">
           Ainda não tem uma conta? Clique aqui!
         </button>
       </div>
