@@ -2,6 +2,7 @@
   color: red;
   font-size: 3rem;
   font-weight: 700;
+  cursor: pointer;
 
   span {
     font-weight: 300;
@@ -16,7 +17,7 @@
 }
 
 @media screen and (max-width: 640px) {
-  * {
+  #banner {
     cursor: default;
   }
 }

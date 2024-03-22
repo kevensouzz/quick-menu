@@ -6,21 +6,20 @@
     </span>
 
     <div>
-      <div class="fields">
 
-        @if (!hasAccount) {
+      @if (!hasAccount) {
+      <div class="fields">
         <span>
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" autocomplete="on" required>
+          <input type="email" name="email" id="email" placeholder="exemple@email.com" autocomplete="on">
         </span>
-        }
         <span>
           <label for="username">Username</label>
-          <input type="text" name="username" id="username" autocomplete="on" required>
+          <input type="text" name="username" id="username" placeholder="username_example" autocomplete="on">
         </span>
         <span>
           <label for="password">Senha</label>
-          <input type="password" name="password" id="password" autocomplete="on" required>
+          <input type="password" name="password" id="password" placeholder="p@SSw0rd_3X4MPLe" autocomplete="on">
         </span>
       </div>
 
@@ -29,13 +28,30 @@
           ENVIAR
         </button>
         <button type="button" (click)="toggleHasAccount()">
-          @if (hasAccount) {
-          Ainda não tem uma conta? Clique aqui!
-          } @else {
           Já tem uma conta? Clique aqui!
-          }
         </button>
       </div>
+      } @else if (hasAccount) {
+      <div class="fields">
+        <span>
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" placeholder="username_example" autocomplete="on">
+        </span>
+        <span>
+          <label for="password">Senha</label>
+          <input type="password" name="password" id="password" placeholder="p@SSw0rd_3X4MPLe" autocomplete="on">
+        </span>
+      </div>
+
+      <div class="buttons">
+        <button class="" type="submit">
+          ENVIAR
+        </button>
+        <button class="" type="button" (click)="toggleHasAccount()">
+          Ainda não tem uma conta? Clique aqui!
+        </button>
+      </div>
+      }
     </div>
   </form>
 </main>

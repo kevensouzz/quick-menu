@@ -1,4 +1,31 @@
-<header>
-  <app-banner />
-  <app-nav />
+<header id="header">
+  <app-banner *ngIf="!mobileMenu || screenWidth > 425" />
+
+  <nav id="navbar">
+    <app-link children="Scan" href="scan" />
+    <app-link children="Generate" href="generate" />
+  </nav>
+
+  @if (mobileMenu) {
+  <nav id="mobile-nav">
+    <header id="mobile-nav-header">
+      <app-banner />
+      <button class="mobile-nav-btn" type="button" (click)="toggleMobileMenu()">
+        <img ngSrc="assets/svg/x.svg" height="28" width="28"
+          alt="ícone para o botão que abre menu da barra de navegação">
+      </button>
+    </header>
+
+    <span>
+      <app-link children="Scan" href="scan" />
+      <app-link children="Generate" href="generate" />
+    </span>
+  </nav>
+  } @else {
+  <button class="mobile-nav-btn" type="button" (click)="toggleMobileMenu()">
+    <img ngSrc="assets/svg/align-center.svg" priority height="28" width="28"
+      alt="ícone para o botão que fecha o menu da barra de navegação">
+  </button>
+  }
+
 </header>
