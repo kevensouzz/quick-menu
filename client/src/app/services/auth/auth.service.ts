@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { tap } from 'rxjs';
 
-interface requestResponse {
+interface authResponse {
   token: string
 }
 
@@ -14,15 +14,17 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  register(email: String, username: String, password: String): Observable<requestResponse> {
-    const data = { email, username, password }
-
-    return this.http.post<requestResponse>(`${this.endpoint}/register`, data)
+  register(email: String, username: String, password: String) {
+    return this.http.post<authResponse>(`${this.endpoint}/register`, { email, username, password })
+      .pipe(tap((response) => {
+        document.cookie = `token=${response.token}`;
+      }))
   }
 
-  login(username: String, password: String): Observable<requestResponse> {
-    const data = { username, password }
-
-    return this.http.post<requestResponse>(`${this.endpoint}/login`, data)
+  login(username: String, password: String) {
+    return this.http.post<authResponse>(`${this.endpoint}/login`, { username, password })
+      .pipe(tap((response) => {
+        document.cookie = `token=${response.token}`;
+      }))
   }
 }

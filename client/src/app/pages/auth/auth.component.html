@@ -29,10 +29,10 @@
 
       <div class="buttons">
         <button type="submit" [className]="register.valid && 'enable'" [disabled]="!register.valid">
-          ENVIAR
+          CADASTRAR
         </button>
         <button type="button" (click)="toggleHasAccount()">
-          Já tem uma conta? Clique aqui!
+          CONTA EXISTENTE
         </button>
       </div>
       } @else if (hasAccount) {
@@ -51,10 +51,10 @@
 
       <div class="buttons">
         <button type="submit" [className]="login.valid && 'enable'" [disabled]="!login.valid">
-          ENVIAR
+          LOGAR
         </button>
         <button type="button" (click)="toggleHasAccount()">
-          Ainda não tem uma conta? Clique aqui!
+          CONTA NOVA
         </button>
       </div>
       }

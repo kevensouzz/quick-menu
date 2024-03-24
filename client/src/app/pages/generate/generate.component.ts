@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './generate.component.css'
 })
 export class GenerateComponent {
-
+  
 }
