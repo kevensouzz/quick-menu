@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-auth',
@@ -22,12 +22,22 @@ export class AuthComponent {
     this.hasAccount = !this.hasAccount
   }
 
-  router = inject(Router)
+  data: any[] = []
+
+  loadUsers() {
+    this.http.get("http://localhost:8080/users")
+      .subscribe((users: any) => {
+        this.data = users
+      })
+  }
 
   constructor(
     private service: AuthService,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private http: HttpClient
   ) {
+    this.loadUsers()
+
     this.register = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
       username: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(16)]),
@@ -44,15 +54,9 @@ export class AuthComponent {
     if (this.register.valid) {
       this.service.register(this.register.value.email, this.register.value.username, this.register.value.password)
         .subscribe({
-          next: () => {
-            this.router.navigateByUrl("generate")
-            console.clear()
-            this.toastService.success("Registrado Com Sucesso!")
-          },
           error: () => {
+            this.register.reset()
             this.toastService.error("Algo Deu Errado!")
-            this.login.reset()
-            console.clear()
           }
         })
     }
@@ -62,16 +66,10 @@ export class AuthComponent {
     if (this.login.valid) {
       this.service.login(this.login.value.username, this.login.value.password)
         .subscribe({
-          next: () => {
-            this.router.navigateByUrl("generate")
-            console.clear()
-            this.toastService.success("Logado Com Sucesso!")
-          },
           error: () => {
-            this.toastService.error("Algo Deu Errado!")
             this.login.reset()
-            console.clear()
-          }
+            this.toastService.error("Algo Deu Errado!")
+          },
         }
         )
     }

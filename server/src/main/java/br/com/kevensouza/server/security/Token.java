@@ -21,9 +21,12 @@ public class Token {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("auth-api")
-                    .withSubject(user.getUsername())
+                    .withIssuer("Quickmenu")
                     .withExpiresAt(genExpirationDate())
+                    .withSubject(user.getEmail())
+                    .withClaim("email", user.getEmail())
+                    .withClaim("username", user.getUsername())
+                    .withClaim("role", user.getRole().toString())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Error while generating token", exception);
@@ -34,7 +37,7 @@ public class Token {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("auth-api")
+                    .withIssuer("Quickmenu")
                     .build()
                     .verify(token)
                     .getSubject();
