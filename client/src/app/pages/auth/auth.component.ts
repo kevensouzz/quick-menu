@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../services/user/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 
@@ -33,7 +33,7 @@ export class AuthComponent {
 
   constructor(
     private service: AuthService,
-    private toastService: ToastrService,
+    private toast: ToastrService,
     private http: HttpClient
   ) {
     this.loadUsers()
@@ -56,7 +56,7 @@ export class AuthComponent {
         .subscribe({
           error: () => {
             this.register.reset()
-            this.toastService.error("Algo Deu Errado!")
+            this.toast.error("Algo Deu Errado!")
           }
         })
     }
@@ -68,7 +68,7 @@ export class AuthComponent {
         .subscribe({
           error: () => {
             this.login.reset()
-            this.toastService.error("Algo Deu Errado!")
+            this.toast.error("Algo Deu Errado!")
           },
         }
         )

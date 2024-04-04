@@ -1,0 +1,38 @@
+<main>
+  <div class="filter-search">
+    <input type="search" name="search" id="search" placeholder="Search by Email or Username" class="no-focus"
+      (input)="onSearchChange($event)">
+
+    <div class="button-group">
+      <button (click)="userFilter('all')" class="no-focus" [class.selected]="selectedOption === 'all'">ALL</button>
+      <button (click)="userFilter('user')" class="no-focus"
+        [class.selected]="selectedOption === 'user'">USER(S)</button>
+      <button (click)="userFilter('admin')" class="no-focus"
+        [class.selected]="selectedOption === 'admin'">ADMIN(S)</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <header>
+      <span class="email">email</span>
+      <span class="username">username</span>
+      <span class="role">role</span>
+      <span class="modal"></span>
+    </header>
+
+    <div class="list">
+      @for (user of users; track $index) {
+      <div class="user">
+        <span class="email">{{ user.email }}</span>
+        <span class="username">{{ user.username }}</span>
+        <span class="role">{{ user.role }}</span>
+        <span class="modal">
+          <button type="button" class="no-focus">
+            <img ngSrc="assets/svg/bolt.svg" height="20" width="20" alt="Modal User Icon">
+          </button>
+        </span>
+      </div>
+      }
+    </div>
+  </div>
+</main>

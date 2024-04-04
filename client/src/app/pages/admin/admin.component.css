@@ -1,0 +1,236 @@
+main {
+  width: 100%;
+  height: 100dvh;
+  background-color: black;
+  padding: 80px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow: hidden;
+
+  .filter-search {
+    width: 100%;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+
+    input {
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px solid red;
+      padding: 0.3rem 0.5rem;
+      color: red;
+    }
+
+    input::placeholder {
+      color: rgba(255, 0, 0, 0.5);
+    }
+
+    input::selection {
+      color: black;
+      background-color: red;
+    }
+
+    input::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 0.5rem;
+
+      button {
+        background-color: transparent;
+        border: 2px solid red;
+        color: red;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: all 250ms linear;
+      }
+
+      button:hover,
+      button:focus-visible {
+        background-color: red;
+        color: black;
+      }
+
+      button.selected {
+        background-color: red;
+        color: black;
+      }
+    }
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .email {
+      width: 100%;
+      max-width: 50%;
+      overflow: hidden;
+    }
+
+    .username {
+      width: 100%;
+      max-width: 25%;
+      overflow: hidden;
+    }
+
+    .role {
+      width: 100%;
+      max-width: 15%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 10%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+    }
+
+    span {
+      color: red;
+    }
+
+    header {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 0, 0, 0.25);
+      margin-bottom: 0.5rem;
+
+      span {
+        font-weight: 600;
+        font-size: 1.25rem;
+        text-transform: uppercase;
+      }
+    }
+
+    .list {
+      width: 100%;
+      height: 450px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      .user {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+
+        span {
+          user-select: text;
+        }
+
+        span::selection {
+          background-color: red;
+          color: black;
+        }
+
+        span {
+
+          button {
+            background-color: transparent;
+            border: none;
+            height: fit-content;
+            width: fit-content;
+            cursor: pointer;
+
+            img {
+              margin-bottom: -0.25rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  main {
+    padding: 60px 10px 10px;
+
+    .filter-search {
+      gap: 0.5rem;
+
+      input {
+        font-size: 0.75rem;
+        width: 200px;
+        padding: 0.25rem;
+      }
+
+      .button-group button {
+        cursor: default;
+        padding: 1px 5px;
+        font-size: 0.75rem;
+      }
+    }
+
+    .content {
+
+      .email {
+        max-width: 40%;
+      }
+
+      .username {
+        max-width: 30%;
+      }
+
+      .role {
+        max-width: 15%;
+      }
+
+      .modal {
+        max-width: 15%;
+      }
+
+      header span {
+        font-size: 1rem;
+      }
+
+      .list {
+        .user {
+          span {
+            font-size: 0.75rem;
+
+            button {
+              cursor: default;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  main {
+    .filter-search {
+      flex-direction: column-reverse;
+      gap: 1rem;
+
+      input {
+        width: 260px;
+        text-align: center;
+      }
+    }
+
+    .content header span {
+      font-size: 0.8rem;
+    }
+  }
+}

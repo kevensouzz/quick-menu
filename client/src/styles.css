@@ -3,6 +3,24 @@
 
 .toast-container {
   top: 10px;
+
+  .ngx-toastr {
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase;
+  }
+}
+
+.toast-error {
+  background: red;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.toast-message {
+  width: fit-content;
+  text-wrap: nowrap;
 }
 
 * {
@@ -27,4 +45,17 @@ body {
 .no-focus:focus-visible {
   outline: none;
   border: none;
+}
+
+::-webkit-scrollbar {
+  width: 0.25rem;
+  height: 0.1rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #252525;
+}
+
+::-webkit-scrollbar-thumb {
+  background: red;
 }
