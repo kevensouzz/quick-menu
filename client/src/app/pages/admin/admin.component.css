@@ -164,6 +164,7 @@ main {
       .user-modal {
         display: none;
         position: fixed;
+        z-index: 12;
         inset: 0;
         overflow: hidden;
         background-color: rgba(0, 0, 0, 0.75);

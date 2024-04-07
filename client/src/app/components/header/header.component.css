@@ -3,6 +3,7 @@
   height: 80px;
   padding: 0 3rem;
   position: fixed;
+  z-index: 11;
   top: 0;
   display: flex;
   justify-content: space-between;
@@ -25,7 +26,6 @@
 
   #mobile-nav {
     position: absolute;
-    z-index: 10;
     left: 0;
     top: 0;
     width: 100%;

@@ -27,6 +27,7 @@ public class Token {
                     .withClaim("email", user.getEmail())
                     .withClaim("username", user.getUsername())
                     .withClaim("role", user.getRole().toString())
+                    .withClaim("id", user.getId().toString())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Error while generating token", exception);

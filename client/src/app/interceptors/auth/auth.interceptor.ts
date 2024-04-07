@@ -3,43 +3,17 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
-
+import { CookiesService } from '../../services/cookies/cookies.service';
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
 
   interface ExtendedJwtPayload extends JwtPayload {
-    email?: string;
-    username?: string;
-    role?: string;
+    role: string;
   }
 
   const router = inject(Router)
+  const cookie = inject(CookiesService)
 
-  function setCookie(name: string, value: string, expireHours: number) {
-    let d: Date = new Date();
-    d.setTime(d.getTime() + expireHours * 60 * 60 * 1000);
-    let expires: string = `expires=${d.toUTCString()}`;
-    document.cookie = `${name}=${value}; ${expires}`;
-  }
-
-  function getCookie(name: string) {
-    let cookies: Array<string> = document.cookie.split(';');
-
-    for (let cookie of cookies) {
-      let [cookieName, cookieValue] = cookie.trim().split('=');
-
-      if (cookieName === name) {
-        return decodeURIComponent(cookieValue);
-      }
-    }
-
-    return null;
-  }
-
-  function deleteCookie(name: string) {
-    setCookie(name, "", -1)
-  }
-
-  const token = getCookie("token")
+  const token = cookie.get("token")
 
   switch (router.url) {
     case "/admin":
@@ -49,37 +23,38 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
           const isExpired = decodedToken && decodedToken.exp ? decodedToken.exp < Date.now() / 1000 : false
 
           if (isExpired || !decodedToken.iss || decodedToken.iss != "Quickmenu") {
-            deleteCookie("token")
+            cookie.delete("token")
             router.navigateByUrl("generate/auth")
           } else if (decodedToken.role !== "ADMIN") {
             router.navigateByUrl("generate")
           }
         } catch (error) {
-          deleteCookie("token")
+          cookie.delete("token")
           router.navigateByUrl("generate/auth")
         }
       } else {
-        deleteCookie("token")
+        cookie.delete("token")
         router.navigateByUrl("generate/auth")
       }
       break;
 
     case "/generate":
+    case "/generate/account":
       if (token) {
         try {
           let decodedToken = jwtDecode(token)
           const isExpired = decodedToken && decodedToken.exp ? decodedToken.exp < Date.now() / 1000 : false
 
           if (isExpired || !decodedToken.iss || decodedToken.iss != "Quickmenu") {
-            deleteCookie("token")
+            cookie.delete("token")
             router.navigateByUrl("generate/auth")
           }
         } catch (error) {
-          deleteCookie("token")
+          cookie.delete("token")
           router.navigateByUrl("generate/auth")
         }
       } else {
-        deleteCookie("token")
+        cookie.delete("token")
         router.navigateByUrl("generate/auth")
       }
       break;
