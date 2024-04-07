@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/user/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [NgOptimizedImage, CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   providers: [AuthService],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'

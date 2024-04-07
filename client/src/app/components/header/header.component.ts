@@ -1,12 +1,12 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { LinkComponent } from './link/link.component';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { BannerComponent } from './banner/banner.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [BannerComponent, LinkComponent, NgOptimizedImage, CommonModule],
+  imports: [BannerComponent, LinkComponent, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

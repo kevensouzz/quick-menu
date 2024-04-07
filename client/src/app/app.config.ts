@@ -18,7 +18,8 @@ export const appConfig: ApplicationConfig = {
       timeOut: 1000,
       positionClass: "toast-top-center",
       tapToDismiss: false,
-      extendedTimeOut: 0
+      extendedTimeOut: 0,
+      preventDuplicates: true
     }),
     provideAnimations()
   ]

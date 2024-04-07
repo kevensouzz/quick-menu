@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 
 interface authResponse {
@@ -21,7 +20,7 @@ export class AuthService {
     document.cookie = `${name}=${value}; ${expires}; ${cpath}`;
   }
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   register(email: String, username: String, password: String) {
     return this.http.post<authResponse>(`${this.endpoint}/register`, { email, username, password })
