@@ -4,10 +4,15 @@ import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { CookiesService } from '../../services/cookies/cookies.service';
 
 interface ExtendedJwtPayload extends JwtPayload {
-  email: string;
-  username: string;
-  role: string;
-  id: string;
+  id?: string;
+}
+
+interface UserInterface {
+  id: string
+  email: string
+  username: string
+  password: string
+  role: string
 }
 
 @Component({
@@ -18,15 +23,22 @@ interface ExtendedJwtPayload extends JwtPayload {
   styleUrl: './account.component.css'
 })
 export class AccountComponent {
-  user: ExtendedJwtPayload | null = this.cookie.get("token") ? jwtDecode(this.cookie.get("token") as string) : null;
-
+  token = this.cookie.get("token")
+  userId: string | undefined;
+  user: UserInterface | undefined
+  
   constructor(
     private http: HttpClient,
     private cookie: CookiesService
   ) {
-    this.http.get(`http://localhost:8080/users/${this.user?.id}`)
-      .subscribe((user: any) => {
-        // this.data = user
+    if (this.token) {
+      const decodedToken = jwtDecode<ExtendedJwtPayload>(this.token);
+      this.userId = decodedToken.id as string;
+    }
+
+    this.http.get<UserInterface>(`http://localhost:8080/users/${this.userId}`)
+      .subscribe((data: UserInterface) => {
+        this.user = data
       })
   }
 
