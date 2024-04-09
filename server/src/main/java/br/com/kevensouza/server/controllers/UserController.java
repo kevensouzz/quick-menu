@@ -137,6 +137,25 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("User Password Successfully Updated");
     }
 
+    @PatchMapping("/role/{id}")
+    public ResponseEntity<Object> UpdateRole(@PathVariable(value = "id") UUID id, @RequestBody @Valid UserModel userModel) {
+        Optional<UserModel> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else if (userModel.getEmail() != null || userModel.getUsername() != null || userModel.getPassword() != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        if (user.get().getRole() != userModel.getRole()) {
+            user.get().setRole(userModel.getRole());
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("It's Already The Actual Role!");
+        }
+
+        userRepository.save(user.get());
+        return ResponseEntity.status(HttpStatus.OK).body("User Role Successfully Updated");
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") UUID id) {
         Optional<UserModel> user = userRepository.findById(id);

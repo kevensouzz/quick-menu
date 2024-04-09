@@ -67,14 +67,18 @@
           <div class="user-modal-body">
 
             <div *ngIf="modalButtons" class="modal-buttons">
-              <button type="button" class="modal-button" (click)="modalButtons = false; editUser = true">
-                ATUALIZAR EMAIL | USERNAME
+              <button type="button" class="modal-button"
+                (click)="modalButtons = false; editUser = true; update.setValue({email: selectedUser?.email, username: selectedUser?.username})">
+                UPDATE EMAIL | USERNAME
               </button>
               <button type="button" class="modal-button" (click)="modalButtons = false; editUserPass = true">
-                ATUALIZAR SENHA
+                UPDATE PASSWORD
+              </button>
+              <button type="button" class="modal-button" (click)="modalButtons = false; editUserRole = true; updateRole.setValue({role: selectedUser?.role})">
+                UPDATE ROLE
               </button>
               <button type="button" class="modal-button" (click)="modalButtons = false; confirmDelete = true">
-                DELETAR USUÁRIO
+                DELETE USER
               </button>
             </div>
 
@@ -94,9 +98,9 @@
               </div>
 
               <div class="button-group">
-                <button type="submit" class="modal-button">SALVAR!</button>
+                <button type="submit" class="modal-button">SAVE!</button>
                 <button type="button" class="modal-button"
-                  (click)="editUser = false; modalButtons = true">CANCELAR!</button>
+                  (click)="editUser = false; modalButtons = true">CANCEL!</button>
               </div>
             </form>
 
@@ -110,16 +114,32 @@
               </span>
 
               <div class="button-group">
-                <button type="submit" class="modal-button">SALVAR!</button>
+                <button type="submit" class="modal-button">SAVE!</button>
                 <button type="button" class="modal-button"
-                  (click)="editUserPass = false; modalButtons = true">CANCELAR!</button>
+                  (click)="editUserPass = false; modalButtons = true">CANCEL!</button>
+              </div>
+            </form>
+
+            <form *ngIf="editUserRole" class="edit-user-role" [formGroup]="updateRole"
+              (submit)="updateRoleSubmit(selectedUser?.id)">
+
+              <span class="modal-field">
+                <label for="role">Role</label>
+                <input type="text" name="role" id="role" placeholder='"ADMIN" | "USER"' autocomplete="on"
+                  formControlName="role">
+              </span>
+
+              <div class="button-group">
+                <button type="submit" class="modal-button">SAVE!</button>
+                <button type="button" class="modal-button"
+                  (click)="editUserRole = false; modalButtons = true">CANCEL!</button>
               </div>
             </form>
 
             <div *ngIf="confirmDelete" class="delete-confirmation">
               <p>Are you sure you want to delete {{ selectedUser?.username }}?</p>
               <div class="button-group">
-                <button type="button" class="modal-button" (click)="deleteUser(selectedUser?.id)">YES, DELETE!</button>
+                <button type="button" class="modal-button" (click)="deleteUser(selectedUser?.id)">DELETE!</button>
                 <button type="button" class="modal-button"
                   (click)="confirmDelete = false; modalButtons = true">CANCEL!</button>
               </div>

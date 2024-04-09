@@ -28,10 +28,12 @@ export class AdminComponent {
   modalButtons: boolean = true
   editUser: boolean = false
   editUserPass: boolean = false
+  editUserRole: boolean = false
   confirmDelete: boolean = false
 
   update!: FormGroup
   updatePass!: FormGroup
+  updateRole!: FormGroup
 
   constructor(
     private service: UpdateService,
@@ -49,6 +51,10 @@ export class AdminComponent {
 
     this.updatePass = new FormGroup({
       password: new FormControl("", [Validators.required, Validators.minLength(8)])
+    })
+
+    this.updateRole = new FormGroup({
+      role: new FormControl("", Validators.required)
     })
   }
 
@@ -100,13 +106,14 @@ export class AdminComponent {
     this.modalButtons = true
     this.editUser = false
     this.editUserPass = false
+    this.editUserRole = false
     this.confirmDelete = false
   }
 
   updateSubmit(id: string) {
 
     if (this.selectedUser?.role == "ADMIN") {
-      this.toast.error("Can Not Touch An Admin!")
+      return this.toast.error("Can Not Touch An Admin!")
     }
 
     if (this.update.value.email == this.selectedUser?.email) {
@@ -118,50 +125,70 @@ export class AdminComponent {
     }
 
     if (this.update.valid) {
-      this.service.update(this.update.value.email, this.update.value.username, id)
+      return this.service.update(this.update.value.email, this.update.value.username, id)
         .subscribe({
-          next: () => {
-            this.toast.error("Successfully Updated!")
-          },
           error: () => {
-            this.toast.error("Something Went Wrong!")
+            this.toast.error("Successfully Updated!")
           },
         })
     }
+    return
   }
 
   updatePassSubmit(id: string) {
     if (this.selectedUser?.role == "ADMIN") {
-      this.toast.error("Can Not Touch An Admin!")
+      return this.toast.error("Can Not Touch An Admin!")
     }
 
     if (this.updatePass.valid) {
-      this.service.updatePass(this.updatePass.value.password, id)
+      return this.service.updatePass(this.updatePass.value.password, id)
         .subscribe({
-          next: () => {
-            this.toast.error("Successfully Updated!")
-          },
           error: () => {
-            this.toast.error("Something Went Wrong!")
+            this.toast.error("Successfully Updated!")
+            this.updatePass.reset()
           },
         })
     }
+    return
+  }
+
+  updateRoleSubmit(id: string) {
+    if (this.selectedUser?.role == "ADMIN") {
+      return this.toast.error("Can Not Touch An Admin!")
+    }
+
+    if (this.updateRole.value.role == "ADMIN") {
+      this.updateRole.value.role = 0
+    } else if (this.updateRole.value.role == "USER") {
+      this.updateRole.value.role = 1
+    }
+
+    if (this.updateRole.valid) {
+      return this.service.updateRole(this.updateRole.value.role, id)
+        .subscribe({
+          error: () => {
+            this.toast.error("Successfully Updated!")
+            this.updatePass.reset()
+          },
+        })
+    }
+    return
   }
 
   deleteUser(id: string) {
     if (this.selectedUser?.role == "ADMIN") {
       return this.toast.error("Can Not Touch An Admin!")
-    }
-
-    return this.http.delete(`http://localhost:8080/users/${id}`, {
-      headers: {
-        "Authorization": `Bearer ${this.cookie.get("token")}`
-      }
-    })
-      .subscribe({
-        error: () => {
-          this.toast.error("Successfully Deleted!")
+    } else {
+      return this.http.delete(`http://localhost:8080/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${this.cookie.get("token")}`
         }
       })
+        .subscribe({
+          error: () => {
+            this.toast.error("Successfully Deleted!")
+          }
+        })
+    }
   }
 }

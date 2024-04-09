@@ -37,4 +37,17 @@ export class UpdateService {
       }
     })
   }
+
+  updateRole(role: string, id: string) {
+    const url = `http://localhost:8080/users/role/${id}`;
+    const body = { role };
+
+    return this.http.patch(url, body, {
+      headers: {
+        "Content-Type": "application/json",
+        responseType: "text",
+        Authorization: `Bearer ${this.cookie.get("token")}`
+      }
+    })
+  }
 }

@@ -30,6 +30,7 @@ public class Config {
                         .requestMatchers(HttpMethod.GET, "/users/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/users/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/users/pass/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/users/role/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/users/**").authenticated()
                         .anyRequest().permitAll()
                 )
