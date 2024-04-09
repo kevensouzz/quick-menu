@@ -24,7 +24,6 @@ public class Token {
                     .withIssuer("Quickmenu")
                     .withExpiresAt(genExpirationDate())
                     .withSubject(user.getEmail())
-                    .withClaim("role", user.getRole().toString())
                     .withClaim("id", user.getId().toString())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
@@ -41,11 +40,11 @@ public class Token {
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException exception) {
-            return "";
+            return null;
         }
     }
 
-    private Instant genExpirationDate(){
+    private Instant genExpirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 }

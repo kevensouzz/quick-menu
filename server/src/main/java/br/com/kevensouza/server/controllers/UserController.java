@@ -1,17 +1,17 @@
 package br.com.kevensouza.server.controllers;
 
-import br.com.kevensouza.server.models.UserRole;
-import br.com.kevensouza.server.security.Token;
 import br.com.kevensouza.server.models.UserModel;
+import br.com.kevensouza.server.models.UserRole;
 import br.com.kevensouza.server.models.dtos.ResponseTokenDto;
 import br.com.kevensouza.server.repositories.UserRepository;
+import br.com.kevensouza.server.security.Token;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,15 +22,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class UserController {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    Token tokenService;
-    @Autowired
-    AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final Token tokenService;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
     public ResponseEntity<Object> Register(@RequestBody @Valid UserModel user) {
@@ -46,7 +45,7 @@ public class UserController {
         }
         var usernamePassword = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         user.setRole(UserRole.USER);
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
@@ -58,7 +57,7 @@ public class UserController {
         if (
                 userRepository.findByUsername(user.getUsername()) == null
                         ||
-                        !new BCryptPasswordEncoder().matches(user.getPassword(), userRepository.findByUsername(user.getUsername()).getPassword())
+                        !passwordEncoder.matches(user.getPassword(), userRepository.findByUsername(user.getUsername()).getPassword())
         ) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Invalid Username or Password!");
         } else if (user.getRole() != null || user.getEmail() != null) {
@@ -128,8 +127,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Password Must Be Equal Or Bigger Then 8 Characters!");
         }
 
-        if (!new BCryptPasswordEncoder().matches(userModel.getPassword(), user.get().getPassword())) {
-            user.get().setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
+        if (!passwordEncoder.matches(userModel.getPassword(), user.get().getPassword())) {
+            user.get().setPassword(passwordEncoder.encode(userModel.getPassword()));
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("It's Already The Actual Password!");
         }
