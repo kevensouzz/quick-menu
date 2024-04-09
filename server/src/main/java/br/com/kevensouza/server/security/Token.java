@@ -25,6 +25,7 @@ public class Token {
                     .withExpiresAt(genExpirationDate())
                     .withSubject(user.getEmail())
                     .withClaim("id", user.getId().toString())
+                    .withClaim("role", user.getRole().toString())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Error while generating token", exception);

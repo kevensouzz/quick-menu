@@ -1,4 +1,4 @@
-import { HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
@@ -7,7 +7,8 @@ import { CookiesService } from '../../services/cookies/cookies.service';
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
 
   interface ExtendedJwtPayload extends JwtPayload {
-    role: string;
+    id?: string;
+    role?: string;
   }
 
   const router = inject(Router)
@@ -66,11 +67,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
           const isExpired = decodedToken && decodedToken.exp ? decodedToken.exp < Date.now() / 1000 : false
 
           if (isExpired === false && decodedToken.iss === "Quickmenu") {
-            if (decodedToken.role === "ADMIN") {
-              router.navigateByUrl("admin")
-            } else {
-              router.navigateByUrl("generate")
-            }
+            router.navigateByUrl("generate")
           }
         } catch (error) {
           console.log(error);

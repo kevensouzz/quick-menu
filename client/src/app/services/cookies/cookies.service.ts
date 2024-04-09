@@ -6,11 +6,12 @@ import { Injectable } from '@angular/core';
 export class CookiesService {
   constructor() { }
 
-  set(name: string, value: string, expireHours: number) {
+  set(name: string, value: string, expireHours: number, path?: string) {
     let d: Date = new Date();
     d.setTime(d.getTime() + expireHours * 60 * 60 * 1000);
     let expires: string = `expires=${d.toUTCString()}`;
-    document.cookie = `${name}=${value}; ${expires}`;
+    let cpath:string = path ? `; path=${path}` : '';
+    document.cookie = `${name}=${value}; ${expires}${cpath}`;
   }
 
   get(name: string) {

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ToastrService } from 'ngx-toastr';
 import { UpdateService } from '../../services/user/update/update.service';
 import { CommonModule } from '@angular/common';
+import { CookiesService } from '../../services/cookies/cookies.service';
 
 @Component({
   selector: 'app-admin',
@@ -36,8 +37,10 @@ export class AdminComponent {
     private service: UpdateService,
     private http: HttpClient,
     private toast: ToastrService,
+    private cookie: CookiesService,
   ) {
     this.loadUsers()
+    console.clear()
 
     this.update = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
@@ -79,7 +82,11 @@ export class AdminComponent {
   }
 
   loadUsers() {
-    this.http.get("http://localhost:8080/users")
+    this.http.get("http://localhost:8080/users", {
+      headers: {
+        "Authorization": `Bearer ${this.cookie.get("token")}`
+      }
+    })
       .subscribe((users: any) => {
         this.usersData = users
         this.userFilter('all')
@@ -146,7 +153,11 @@ export class AdminComponent {
       return this.toast.error("Can Not Touch An Admin!")
     }
 
-    return this.http.delete(`http://localhost:8080/users/${id}`)
+    return this.http.delete(`http://localhost:8080/users/${id}`, {
+      headers: {
+        "Authorization": `Bearer ${this.cookie.get("token")}`
+      }
+    })
       .subscribe({
         error: () => {
           this.toast.error("Successfully Deleted!")

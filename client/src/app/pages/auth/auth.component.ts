@@ -22,21 +22,13 @@ export class AuthComponent {
     this.hasAccount = !this.hasAccount
   }
 
-  data: any[] = []
-
-  loadUsers() {
-    this.http.get("http://localhost:8080/users")
-      .subscribe((users: any) => {
-        this.data = users
-      })
-  }
-
   constructor(
     private service: AuthService,
     private toast: ToastrService,
     private http: HttpClient
   ) {
-    this.loadUsers()
+    this.http.get("http://localhost:8080/users")
+    .subscribe()
 
     this.register = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),

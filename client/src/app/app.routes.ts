@@ -8,7 +8,8 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { AccountComponent } from './pages/account/account.component';
 
 export const routes: Routes = [
-  { path: "", component: HomeComponent },
+  { path: "home", component: HomeComponent },
+  { path: "", pathMatch: "full", redirectTo: "home" },
   { path: "scan", component: ScanComponent },
   { path: "generate", component: GenerateComponent },
   { path: "generate/account", component: AccountComponent },

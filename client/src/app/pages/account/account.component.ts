@@ -23,20 +23,25 @@ interface UserInterface {
   styleUrl: './account.component.css'
 })
 export class AccountComponent {
-  token = this.cookie.get("token")
+  token: string | null;
   userId: string | undefined;
   user: UserInterface | undefined
-  
+
   constructor(
     private http: HttpClient,
     private cookie: CookiesService
   ) {
+    this.token = this.cookie.get("token")
+
     if (this.token) {
-      const decodedToken = jwtDecode<ExtendedJwtPayload>(this.token);
-      this.userId = decodedToken.id as string;
+      this.userId = jwtDecode<ExtendedJwtPayload>(this.token).id;
     }
 
-    this.http.get<UserInterface>(`http://localhost:8080/users/${this.userId}`)
+    this.http.get<UserInterface>(`http://localhost:8080/users/${this.userId}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    })
       .subscribe((data: UserInterface) => {
         this.user = data
       })

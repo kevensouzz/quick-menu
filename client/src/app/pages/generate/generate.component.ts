@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CookiesService } from '../../services/cookies/cookies.service';
+import { JwtPayload, jwtDecode } from 'jwt-decode';
+
+interface ExtendedJwtPayload extends JwtPayload {
+  id?: string;
+}
 
 @Component({
   selector: 'app-generate',
@@ -10,12 +16,24 @@ import { RouterLink } from '@angular/router';
   styleUrl: './generate.component.css'
 })
 export class GenerateComponent {
-  data: any[] = []
+  token: string | null;
+  userId: string | undefined;
 
-  constructor(private http: HttpClient) {
-    this.http.get("http://localhost:8080/users")
-      .subscribe((user: any) => {
-        // this.data = user
-      })
+  constructor(
+    private http: HttpClient,
+    private cookie: CookiesService
+  ) {
+    this.token = this.cookie.get("token")
+
+    if (this.token) {
+      this.userId = jwtDecode<ExtendedJwtPayload>(this.token).id;
+    }
+
+    this.http.get(`http://localhost:8080/users/${this.userId}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    })
+      .subscribe()
   }
 }

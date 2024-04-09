@@ -10,9 +10,7 @@ import { authInterceptor } from './interceptors/auth/auth.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(
-      withInterceptors([authInterceptor])
-    ),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideToastr({
       progressBar: true,
       timeOut: 1000,
