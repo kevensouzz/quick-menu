@@ -1,0 +1,233 @@
+main {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  section {
+    width: 600px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: black;
+    padding: 1rem;
+    padding-bottom: 1.5rem;
+    border-radius: 0.75rem;
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      padding: 0 1rem;
+
+      label {
+        color: red;
+      }
+
+      input {
+        border-radius: 0.5rem;
+        color: red;
+        padding: 0.75rem 0.5rem;
+        font-weight: 500;
+        background-color: white;
+
+        &:focus-visible {
+          outline: red auto 1px;
+        }
+
+        &::selection {
+          background-color: red;
+          color: white;
+        }
+
+        &::placeholder {
+          color: rgba(255, 0, 0, 0.5);
+          font-weight: 300;
+        }
+      }
+    }
+
+    .button {
+      width: 100%;
+      border-radius: 0.5rem;
+      padding: 0.75rem 0;
+      transition: all linear 250ms;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover,
+      &:focus-visible {
+        outline: none;
+        padding: 0.75rem 0;
+      }
+
+      &:disabled {
+        background-color: rgb(100, 100, 100);
+        border: transparent 2px solid;
+        color: rgb(100, 0, 0);
+        cursor: default;
+      }
+    }
+
+    .white {
+      background-color: white;
+      color: red;
+      border: 2px solid white;
+
+      &:hover,
+      &:focus-visible {
+        outline: none;
+        background-color: red;
+        border: 2px solid red;
+        color: white;
+      }
+    }
+
+    .red {
+      background-color: red;
+      color: white;
+      border: 2px solid red;
+
+      &:hover,
+      &:focus-visible {
+        outline: none;
+        background-color: white;
+        border: 2px solid white;
+        color: red;
+      }
+    }
+
+    #user-data-form {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .button-group {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      padding: 0 1rem;
+      gap: 0.75rem;
+
+      .warn-zone {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+    }
+
+    .edit-user,
+    .edit-user-pass {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .fields {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .division {
+        width: 100%;
+        padding: 0 1.25rem;
+        margin: 0.75rem 0;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+          display: block;
+          height: 1px;
+          width: 100%;
+          background-color: rgba(255, 255, 255, 0.35);
+        }
+
+        p {
+          padding: 0 0.1rem;
+          text-wrap: nowrap;
+          text-align: center;
+          font-size: 0.75rem;
+          font-weight: 300;
+          color: rgba(255, 255, 255, 0.35);
+        }
+      }
+    }
+
+    .confirm-delete,
+    .confirm-logout {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .division {
+        width: 100%;
+        padding: 0 1.25rem;
+        margin-top: 0.25rem;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+          display: block;
+          height: 1px;
+          width: 100%;
+          background-color: rgba(255, 255, 255, 0.35);
+        }
+
+        p {
+          padding: 0 0.1rem;
+          text-wrap: nowrap;
+          text-align: center;
+          font-size: 0.75rem;
+          font-weight: 300;
+          color: rgba(255, 255, 255, 0.35);
+        }
+      }
+
+      p {
+        text-align: center;
+
+        span {
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  main section {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 0;
+
+    .field {
+      padding: 0 0.75rem;
+    }
+
+    .button-group {
+      padding: 0 0.75rem;
+    }
+
+    .button {
+      cursor: default;
+    }
+
+  }
+}

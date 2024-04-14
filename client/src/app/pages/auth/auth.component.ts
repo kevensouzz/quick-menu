@@ -20,6 +20,9 @@ export class AuthComponent {
 
   toggleHasAccount() {
     this.hasAccount = !this.hasAccount
+
+    this.register.setValue({ email: '', username: '', password: '' })
+    this.login.setValue({ username: '', password: '' })
   }
 
   constructor(
@@ -28,7 +31,7 @@ export class AuthComponent {
     private http: HttpClient
   ) {
     this.http.get("http://localhost:8080/users")
-    .subscribe()
+      .subscribe()
 
     this.register = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
@@ -48,7 +51,7 @@ export class AuthComponent {
         .subscribe({
           error: () => {
             this.register.reset()
-            this.toast.error("Algo Deu Errado!")
+            this.toast.error("Something Wrong!")
           }
         })
     }
@@ -60,7 +63,7 @@ export class AuthComponent {
         .subscribe({
           error: () => {
             this.login.reset()
-            this.toast.error("Algo Deu Errado!")
+            this.toast.error("Something Wrong!")
           },
         }
         )

@@ -31,9 +31,9 @@ export class AdminComponent {
   editUserRole: boolean = false
   confirmDelete: boolean = false
 
-  update!: FormGroup
-  updatePass!: FormGroup
-  updateRole!: FormGroup
+  update: FormGroup
+  updatePass: FormGroup
+  updateRole: FormGroup
 
   constructor(
     private service: UpdateService,

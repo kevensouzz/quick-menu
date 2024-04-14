@@ -28,6 +28,7 @@ public class Config {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/users/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/users/checkPass/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/users/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/users/pass/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/users/role/**").hasRole("ADMIN")

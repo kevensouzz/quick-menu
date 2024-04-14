@@ -29,6 +29,6 @@ export class CookiesService {
   }
 
   delete(name: string) {
-    this.set(name, "", -1)
+    this.set(name, "", -1, "/")
   }
 }

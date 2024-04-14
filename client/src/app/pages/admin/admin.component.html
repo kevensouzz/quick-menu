@@ -74,7 +74,8 @@
               <button type="button" class="modal-button" (click)="modalButtons = false; editUserPass = true">
                 UPDATE PASSWORD
               </button>
-              <button type="button" class="modal-button" (click)="modalButtons = false; editUserRole = true; updateRole.setValue({role: selectedUser?.role})">
+              <button type="button" class="modal-button"
+                (click)="modalButtons = false; editUserRole = true; updateRole.setValue({role: selectedUser?.role})">
                 UPDATE ROLE
               </button>
               <button type="button" class="modal-button" (click)="modalButtons = false; confirmDelete = true">

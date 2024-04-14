@@ -69,6 +69,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseTokenDto(token));
     }
 
+    @PostMapping("/checkPass/{id}")
+    public ResponseEntity<Boolean> CheckPassword(@PathVariable(value = "id") UUID id, @RequestBody @Valid UserModel userModel) {
+        Optional<UserModel> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else if (userModel.getEmail() != null || userModel.getUsername() != null || userModel.getRole() != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(passwordEncoder.matches(userModel.getPassword(), user.get().getPassword()));
+    }
+
     @GetMapping
     public ResponseEntity<List<UserModel>> List() {
         List<UserModel> users = userRepository.findAll();
