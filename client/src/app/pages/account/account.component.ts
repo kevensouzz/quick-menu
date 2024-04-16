@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CheckPassService } from '../../services/user/checkPass/check-pass.service';
+import { AuthService } from '../../services/user/auth/auth.service';
 
 interface ExtendedJwtPayload extends JwtPayload {
   id?: string;
@@ -35,6 +36,7 @@ export class AccountComponent {
 
   passwordMatch!: boolean;
   usernameLogin!: String;
+  passwordLogin!: String;
 
   UserInfo: boolean = true;
   updateUser: boolean = false;
@@ -86,6 +88,7 @@ export class AccountComponent {
 
   updateSubmit(id: string) {
     this.usernameLogin = this.update.value.username;
+    this.passwordLogin = this.update.value.passwordConfirm;
 
     if (this.update.value.email == this.user?.email) {
       this.update.value.email = null
@@ -93,6 +96,10 @@ export class AccountComponent {
 
     if (this.update.value.username == this.user?.username) {
       this.update.value.username = null
+    }
+
+    if (this.update.value.email == null && this.update.value.username == null) {
+      return this.toast.error("There Isn't Changes!")
     }
 
     if (this.update.valid) {
@@ -107,15 +114,15 @@ export class AccountComponent {
 
             if (this.update.value.email != null) {
 
-              this.http.post<{ token: string }>("http://localhost:8080/users/login", { username: this.usernameLogin, password: this.update.value.passwordConfirm })
+              this.http.post<{ token: string }>("http://localhost:8080/users/login", { username: this.usernameLogin, password: this.passwordLogin })
                 .subscribe((response: { token: string }) => {
                   this.cookie.delete("token")
                   this.cookie.set("token", response.token, 2, "/")
-                  this.toast.error("Successfully Updated!")
+                  window.location.reload()
                 })
 
             } else if (this.update.value.username != null) {
-              this.toast.error("Successfully Updated!")
+              window.location.reload()
             }
 
             this.passwordMatch = false;
@@ -125,8 +132,9 @@ export class AccountComponent {
         })
 
     } else {
-      this.toast.error("Invalid Data!")
+      return this.toast.error("Invalid Data!")
     }
+    return
   }
 
   updatePassSubmit(id: string) {

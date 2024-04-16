@@ -3,13 +3,13 @@
     <form id="user-data-form">
       <span class="field">
         <label for="email">Your Email</label>
-        <input type="text" name="email" id="email" placeholder="Something Went Wrong Getting Your Email!"
-          value="{{ user?.email }}" disabled>
+        <input type="text" name="email" id="email" autocomplete="on"
+          placeholder="Something Went Wrong Getting Your Email!" value="{{ user?.email }}" disabled>
       </span>
       <span class="field">
         <label for="username">Your Username</label>
-        <input type="text" name="username" id="username" placeholder="Something Went Wrong Getting Your Username!"
-          value="{{ user?.username }}" disabled>
+        <input type="text" name="username" id="username" autocomplete="on"
+          placeholder="Something Went Wrong Getting Your Username!" value="{{ user?.username }}" disabled>
       </span>
     </form>
 
@@ -39,7 +39,7 @@
   </section>
 
   <section *ngIf="updateUser">
-    <form class="edit-user" [formGroup]="update" (submit)="updateSubmit(user?.id ?? '')">
+    <form class="edit-user" [formGroup]="update" (submit)="updateSubmit(userId ?? '')">
       <div class="fields">
         <span class="field">
           <label for="email">Email</label>
@@ -75,7 +75,7 @@
 
 
   <section *ngIf="updateUserPass">
-    <form class="edit-user-pass" [formGroup]="updatePass" (submit)="updatePassSubmit(user?.id ?? '')">
+    <form class="edit-user-pass" [formGroup]="updatePass" (submit)="updatePassSubmit(userId ?? '')">
 
       <div class="fields">
         <span class="field">
@@ -133,7 +133,7 @@
 
       <div class="button-group">
         <button type="button" [className]="deleteUser.valid ? 'button red' : 'button'" [disabled]="!deleteUser.valid"
-          (click)="delete(user?.id ?? '')">
+          (click)="delete(userId ?? '')">
           DELETE!
         </button>
         <button class="button white" type="button" (click)="confirmDelete = false; UserInfo = true">

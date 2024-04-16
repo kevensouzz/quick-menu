@@ -24,7 +24,7 @@ public class Token {
                     .withIssuer("Quickmenu")
                     .withExpiresAt(genExpirationDate())
                     .withSubject(user.getEmail())
-                    .withClaim("id", user.getId().toString())
+                    .withClaim("id", user.getUserId().toString())
                     .withClaim("role", user.getRole().toString())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {

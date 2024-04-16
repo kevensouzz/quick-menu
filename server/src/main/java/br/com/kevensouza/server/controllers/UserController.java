@@ -24,7 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
     private final UserRepository userRepository;
     private final Token tokenService;
@@ -86,7 +86,7 @@ public class UserController {
         List<UserModel> users = userRepository.findAll();
         if (!users.isEmpty()) {
             for (UserModel user : users) {
-                UUID id = user.getId();
+                UUID id = user.getUserId();
                 user.add(linkTo(methodOn(UserController.class).ListById(id)).withSelfRel());
             }
         }
