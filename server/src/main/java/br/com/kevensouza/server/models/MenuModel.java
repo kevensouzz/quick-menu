@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,4 +28,10 @@ public class MenuModel extends RepresentationModel<MenuModel> {
     private UserModel user;
     private String name;
     private String code;
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"id"})
+    private List<OptionModel> options = new ArrayList<>();
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"id"})
+    private List<SettingsModel> settings = new ArrayList<>();
 }
