@@ -4,5 +4,5 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean install -DskipTests
 ENTRYPOINT ["java", "-jar", "target/server-3.2.4.jar"]

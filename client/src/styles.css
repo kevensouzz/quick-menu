@@ -39,7 +39,8 @@ body {
   width: 100dvw;
   display: flex;
   flex-direction: column;
-  background: url("assets/FOODS DARKGRAY BACKGROUND PATTERN.png") no-repeat fixed;
+  background: url("assets/DARKGRAY BACKGROUND PATTERN.png") no-repeat;
+  background-attachment: fixed, local;
   background-size: cover;
 }
 
