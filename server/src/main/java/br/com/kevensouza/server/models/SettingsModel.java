@@ -1,6 +1,5 @@
 package br.com.kevensouza.server.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,15 +14,14 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-class SettingsModel {
+public class SettingsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID settingsId;
     @OneToOne
     @JoinColumn(name = "menuId")
-    @JsonIgnoreProperties("menu")
     private MenuModel menu;
     private String backgroundColor;
     private String fontColor;
-    private byte fontSize;
+    private int fontSize;
 }

@@ -1,7 +1,9 @@
 package br.com.kevensouza.server.controllers;
 
 import br.com.kevensouza.server.models.MenuModel;
+import br.com.kevensouza.server.models.SettingsModel;
 import br.com.kevensouza.server.repositories.MenuRepository;
+import br.com.kevensouza.server.repositories.SettingsRepository;
 import br.com.kevensouza.server.repositories.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +24,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/menu")
 @CrossOrigin(origins = "http://localhost:4200")
 public class MenuController {
-    private final MenuRepository menuRepository;
     private final UserRepository userRepository;
+    private final MenuRepository menuRepository;
+    private final SettingsRepository settingsRepository;
 
     @PostMapping("/new/{userId}")
-    public ResponseEntity<Object> Create(@PathVariable(value = "userId") UUID userId, @RequestBody @Valid MenuModel body) {
+    public ResponseEntity<Object> Create(@PathVariable(value = "userId") UUID userId, @RequestBody @Valid MenuModel body, SettingsModel settings) {
         var user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         body.setUser(user);
 
@@ -38,7 +41,15 @@ public class MenuController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("this code is already in use.");
         }
 
-        menuRepository.save(body);
+        settings.setBackgroundColor("white");
+        settings.setFontColor("black");
+        settings.setFontSize(12);
+
+        var menu = menuRepository.save(body);
+
+        settings.setMenu(menu);
+        settingsRepository.save(settings);
+
         return ResponseEntity.status(HttpStatus.CREATED).body("successfully created!");
     }
 

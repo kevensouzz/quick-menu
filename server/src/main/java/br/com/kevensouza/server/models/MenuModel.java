@@ -28,10 +28,10 @@ public class MenuModel extends RepresentationModel<MenuModel> {
     private UserModel user;
     private String name;
     private String code;
-    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"id"})
     private List<OptionModel> options = new ArrayList<>();
-    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"id"})
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"settingsId", "menu"})
     private List<SettingsModel> settings = new ArrayList<>();
 }

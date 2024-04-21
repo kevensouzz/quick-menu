@@ -33,7 +33,7 @@ public class UserModel extends RepresentationModel<UserModel> implements UserDet
     private String username;
     private String password;
     private UserRole role;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user", "links"})
     private List<MenuModel> menus = new ArrayList<>();
 

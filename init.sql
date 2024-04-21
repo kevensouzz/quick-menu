@@ -23,6 +23,7 @@ CREATE TABLE options (
   option_id UUID NOT NULL UNIQUE PRIMARY KEY,
   menu_id UUID NOT NULL,
   name TEXT NOT NULL,
+  description TEXT NOT NULL,
   price NUMERIC(5, 2) NOT NULL,
   avaliability BOOLEAN NOT NULL
 );

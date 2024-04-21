@@ -20,6 +20,7 @@ public class OptionModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID optionId;
     private String name;
+    private String description;
     private float price;
     private Boolean avaliability;
     @ManyToOne
