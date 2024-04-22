@@ -24,14 +24,15 @@ CREATE TABLE options (
   menu_id UUID NOT NULL,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
-  price NUMERIC(5, 2) NOT NULL,
+  picture BYTEA,
+  price NUMERIC(6, 2) NOT NULL,
   avaliability BOOLEAN NOT NULL
 );
 
-CREATE TABLE settings (
-  settings_id UUID NOT NULL UNIQUE PRIMARY KEY,
+CREATE TABLE configs (
+  config_id UUID NOT NULL UNIQUE PRIMARY KEY,
   menu_id UUID NOT NULL,
   background_color TEXT NOT NULL,
   font_color TEXT NOT NULL,
-  font_size SMALLINT NOT NULL
+  font_size INTEGER NOT NULL
 );

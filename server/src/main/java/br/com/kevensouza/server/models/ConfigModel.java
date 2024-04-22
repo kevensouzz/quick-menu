@@ -9,15 +9,15 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Entity
-@Table(name = "settings")
+@Table(name = "configs")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SettingsModel {
+public class ConfigModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID settingsId;
+    private UUID configId;
     @OneToOne
     @JoinColumn(name = "menuId")
     private MenuModel menu;

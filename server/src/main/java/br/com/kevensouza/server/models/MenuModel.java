@@ -29,9 +29,9 @@ public class MenuModel extends RepresentationModel<MenuModel> {
     private String name;
     private String code;
     @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"id"})
+    @JsonIgnoreProperties("menu")
     private List<OptionModel> options = new ArrayList<>();
     @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"settingsId", "menu"})
-    private List<SettingsModel> settings = new ArrayList<>();
+    @JsonIgnoreProperties({"configId", "menu"})
+    private List<ConfigModel> config = new ArrayList<>();
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +22,8 @@ public class OptionModel {
     private UUID optionId;
     private String name;
     private String description;
-    private float price;
+    private byte[] picture;
+    private BigDecimal price;
     private Boolean avaliability;
     @ManyToOne
     @JoinColumn(name = "menuId")

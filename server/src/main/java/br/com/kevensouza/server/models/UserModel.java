@@ -1,5 +1,6 @@
 package br.com.kevensouza.server.models;
 
+import br.com.kevensouza.server.models.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

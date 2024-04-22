@@ -1,4 +1,4 @@
-package br.com.kevensouza.server.models;
+package br.com.kevensouza.server.models.enums;
 
 import lombok.Getter;
 
