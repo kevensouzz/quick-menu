@@ -17,7 +17,7 @@ import java.util.UUID;
 public class ConfigController {
     private final ConfigRepository configRepository;
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<Object> Update(@PathVariable(value = "id") UUID id, @RequestBody ConfigModel body) {
         var settings = configRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 

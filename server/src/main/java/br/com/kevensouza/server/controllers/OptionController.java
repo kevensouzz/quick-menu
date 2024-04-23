@@ -20,7 +20,7 @@ public class OptionController {
     private final MenuRepository menuRepository;
     private final OptionRepository optionRepository;
 
-    @PostMapping("/new/{menuId}")
+    @PostMapping("/create/{menuId}")
     public ResponseEntity<Object> Create(@PathVariable(value = "menuId") UUID menuId, @RequestBody @Valid OptionModel body) {
         var menu = menuRepository.findById(menuId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         body.setMenu(menu);
@@ -33,7 +33,7 @@ public class OptionController {
         return ResponseEntity.status(HttpStatus.CREATED).body("successfully created!");
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<Object> Update(@PathVariable(value = "id") UUID id, @RequestBody @Valid OptionModel body) {
         var option = optionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -61,7 +61,7 @@ public class OptionController {
         return ResponseEntity.status(HttpStatus.OK).body("successfully updated!");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") UUID id) {
         var option = optionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         optionRepository.delete(option);

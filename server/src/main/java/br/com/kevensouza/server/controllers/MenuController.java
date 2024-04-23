@@ -27,7 +27,7 @@ public class MenuController {
     private final MenuRepository menuRepository;
     private final ConfigRepository configRepository;
 
-    @PostMapping("/new/{userId}")
+    @PostMapping("/create/{userId}")
     public ResponseEntity<Object> Create(@PathVariable(value = "userId") UUID userId, @RequestBody @Valid MenuModel body, ConfigModel settings) {
         var user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         body.setUser(user);
@@ -52,33 +52,33 @@ public class MenuController {
         return ResponseEntity.status(HttpStatus.CREATED).body("successfully created!");
     }
 
-    @GetMapping
-    public ResponseEntity<List<MenuModel>> List() {
+    @GetMapping("/all")
+    public ResponseEntity<List<MenuModel>> ReadAll() {
         List<MenuModel> menus = menuRepository.findAll();
         if (!menus.isEmpty()) {
             for (MenuModel menu : menus) {
                 UUID id = menu.getMenuId();
-                menu.add(linkTo(methodOn(MenuController.class).ListById(id)).withSelfRel());
+                menu.add(linkTo(methodOn(MenuController.class).ReadById(id)).withSelfRel());
             }
         }
         return ResponseEntity.status(HttpStatus.OK).body(menus);
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<MenuModel> ListById(@PathVariable(value = "id") UUID id) {
+    public ResponseEntity<MenuModel> ReadById(@PathVariable(value = "id") UUID id) {
         var menu = menuRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        menu.add(linkTo(methodOn(MenuController.class).List()).withSelfRel());
+        menu.add(linkTo(methodOn(MenuController.class).ReadAll()).withSelfRel());
         return ResponseEntity.status(HttpStatus.OK).body(menu);
     }
 
     @GetMapping("/code/{code}")
-    public ResponseEntity<MenuModel> ListByCode(@PathVariable(value = "code") String code) {
+    public ResponseEntity<MenuModel> ReadByCode(@PathVariable(value = "code") String code) {
         var menu = menuRepository.findByCode(code).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        menu.add(linkTo(methodOn(MenuController.class).List()).withSelfRel());
+        menu.add(linkTo(methodOn(MenuController.class).ReadAll()).withSelfRel());
         return ResponseEntity.status(HttpStatus.OK).body(menu);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<Object> Update(@PathVariable(value = "id") UUID id, @RequestBody @Valid MenuModel body) {
         var menu = menuRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -98,7 +98,7 @@ public class MenuController {
         return ResponseEntity.status(HttpStatus.OK).body("successfully updated!");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") UUID id) {
         var menu = menuRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         menuRepository.delete(menu);

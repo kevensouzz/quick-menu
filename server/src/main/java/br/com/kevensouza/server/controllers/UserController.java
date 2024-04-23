@@ -75,7 +75,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(passwordEncoder.matches(body.getPassword(), user.getPassword()));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<UserModel>> List() {
         List<UserModel> users = userRepository.findAll();
         if (!users.isEmpty()) {
@@ -87,14 +87,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Object> ListById(@PathVariable(value = "id") UUID id) {
         var user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         user.add(linkTo(methodOn(UserController.class).List()).withSelfRel());
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<Object> Update(@PathVariable(value = "id") UUID id, @RequestBody @Valid UserModel body) {
         var user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         if (userRepository.findByUsername(body.getUsername()) != null || userRepository.findByEmail(body.getEmail()) != null) {
@@ -117,7 +117,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("User Successfully Updated!");
     }
 
-    @PatchMapping("/pass/{id}")
+    @PatchMapping("/update/password/{id}")
     public ResponseEntity<Object> UpdatePass(@PathVariable(value = "id") UUID id, @RequestBody @Valid UserModel body) {
         var user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -137,7 +137,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("User Password Successfully Updated");
     }
 
-    @PatchMapping("/role/{id}")
+    @PatchMapping("/update/role/{id}")
     public ResponseEntity<Object> UpdateRole(@PathVariable(value = "id") UUID id, @RequestBody @Valid UserModel body) {
         var user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -155,7 +155,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("User Role Successfully Updated");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") UUID id) {
         var user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         userRepository.delete(user);
