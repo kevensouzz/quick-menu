@@ -26,17 +26,30 @@ public class Config {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        // users
                         .requestMatchers(HttpMethod.POST, "/users/checkPass/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/menu/new/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/users/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/menu/id/**").authenticated()
-                        .requestMatchers(HttpMethod.PATCH, "/users/**").authenticated()
-                        .requestMatchers(HttpMethod.PATCH, "/users/pass/**").authenticated()
-                        .requestMatchers(HttpMethod.PATCH, "/users/role/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/menu/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/users/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/menu/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/users/id/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/users/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/password/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/role/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/users/delete/**").authenticated()
+
+                        // menus
+                        .requestMatchers(HttpMethod.POST, "/menus/create/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/menus/id/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/menus/update/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/menus/delete/**").authenticated()
+
+                        // options
+                        .requestMatchers(HttpMethod.POST, "/options/create/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/options/update/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/options/delete/**").authenticated()
+
+                        //configs
+                        .requestMatchers(HttpMethod.PATCH, "/options/update/**").authenticated()
+
+                        //
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

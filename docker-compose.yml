@@ -1,0 +1,52 @@
+services:
+  database:
+    container_name: database
+    image: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: "quickmenu"
+    env_file:
+      - .env
+    ports:
+      - 5455:5432
+    networks:
+      - quickmenu
+
+  server:
+    container_name: server
+    image: server
+    environment:
+      - DB_URL=jdbc:postgresql://database:5432/quickmenu
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+    env_file:
+      - .env
+    networks:
+      - quickmenu
+    ports:
+      - 8080:8080
+    links:
+      - database
+
+  client:
+    container_name: client
+    image: client
+    networks:
+      - quickmenu
+    ports:
+      - 4200:80
+    links:
+      - server
+
+networks:
+  quickmenu:
+    name: quickmenu
+    driver: bridge
+
+volumes:
+  postgres-data:
