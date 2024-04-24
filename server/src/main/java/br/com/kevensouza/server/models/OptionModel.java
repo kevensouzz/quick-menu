@@ -20,13 +20,13 @@ public class OptionModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID optionId;
+    @ManyToOne
+    @JoinColumn(name = "menuId")
+    @JsonIgnoreProperties("menu")
+    private MenuModel menu;
     private String name;
     private String description;
     private byte[] picture;
     private BigDecimal price;
     private Boolean avaliability;
-    @ManyToOne
-    @JoinColumn(name = "menuId")
-    @JsonIgnoreProperties("menu")
-    private MenuModel menu;
 }

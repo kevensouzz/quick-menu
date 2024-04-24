@@ -28,7 +28,7 @@ public class MenuController {
     private final ConfigRepository configRepository;
 
     @PostMapping("/create/{userId}")
-    public ResponseEntity<Object> Create(@PathVariable(value = "userId") UUID userId, @RequestBody @Valid MenuModel body, ConfigModel settings) {
+    public ResponseEntity<Object> Create(@PathVariable(value = "userId") UUID userId, @RequestBody @Valid MenuModel body, ConfigModel config) {
         var user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         body.setUser(user);
 
@@ -40,14 +40,14 @@ public class MenuController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("this code is already in use.");
         }
 
-        settings.setBackgroundColor("white");
-        settings.setFontColor("black");
-        settings.setFontSize(12);
+        config.setBackgroundColor("white");
+        config.setFontColor("black");
+        config.setFontSize(12);
 
         var menu = menuRepository.save(body);
 
-        settings.setMenu(menu);
-        configRepository.save(settings);
+        config.setMenu(menu);
+        configRepository.save(config);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("successfully created!");
     }
