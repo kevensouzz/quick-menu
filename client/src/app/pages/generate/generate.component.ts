@@ -29,7 +29,7 @@ export class GenerateComponent {
       this.userId = jwtDecode<ExtendedJwtPayload>(this.token).id;
     }
 
-    this.http.get(`http://localhost:8080/users/${this.userId}`, {
+    this.http.get(`http://localhost:8080/users/id/$${this.userId}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }

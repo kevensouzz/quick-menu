@@ -61,7 +61,7 @@ export class AccountComponent {
       this.userId = jwtDecode<ExtendedJwtPayload>(this.token).id;
     }
 
-    this.http.get<UserInterface>(`http://localhost:8080/users/${this.userId}`, {
+    this.http.get<UserInterface>(`http://localhost:8080/users/id/${this.userId}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -108,7 +108,7 @@ export class AccountComponent {
         .subscribe((data: any) => {
           this.passwordMatch = data
 
-          if (this.passwordMatch === true) {
+          if (this.passwordMatch) {
             this.service.update(this.update.value.email, this.update.value.username, id)
               .subscribe()
 
@@ -143,7 +143,7 @@ export class AccountComponent {
         .subscribe((data: any) => {
           this.passwordMatch = data
 
-          if (this.passwordMatch === true) {
+          if (this.passwordMatch) {
             this.service.updatePass(this.updatePass.value.password, id)
               .subscribe({
                 error: () => {
@@ -172,8 +172,8 @@ export class AccountComponent {
       .subscribe((data: any) => {
         this.passwordMatch = data
 
-        if (this.passwordMatch === true) {
-          this.http.delete(`http://localhost:8080/users/${id}`, {
+        if (this.passwordMatch) {
+          this.http.delete(`http://localhost:8080/users/delete/${id}`, {
             headers: {
               Authorization: `Bearer ${this.token}`
             }

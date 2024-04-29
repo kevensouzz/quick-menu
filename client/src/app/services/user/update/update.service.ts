@@ -13,7 +13,7 @@ export class UpdateService {
   ) { }
 
   update(email: string, username: string, id: string) {
-    const url = `http://localhost:8080/users/${id}`;
+    const url = `http://localhost:8080/users/update/${id}`;
     const body = { email, username };
 
     return this.http.patch(url, body, {
@@ -26,7 +26,7 @@ export class UpdateService {
   }
 
   updatePass(password: string, id: string) {
-    const url = `http://localhost:8080/users/pass/${id}`;
+    const url = `http://localhost:8080/users/update/password/${id}`;
     const body = { password };
 
     return this.http.patch(url, body, {
@@ -39,7 +39,7 @@ export class UpdateService {
   }
 
   updateRole(role: string, id: string) {
-    const url = `http://localhost:8080/users/role/${id}`;
+    const url = `http://localhost:8080/users/update/role/${id}`;
     const body = { role };
 
     return this.http.patch(url, body, {
