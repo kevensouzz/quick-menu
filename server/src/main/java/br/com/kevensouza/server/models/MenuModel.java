@@ -31,7 +31,4 @@ public class MenuModel extends RepresentationModel<MenuModel> {
     @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("menu")
     private List<OptionModel> options = new ArrayList<>();
-    @OneToOne(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("menu")
-    private ConfigModel config;
 }

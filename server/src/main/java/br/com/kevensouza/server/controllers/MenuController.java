@@ -1,9 +1,7 @@
 package br.com.kevensouza.server.controllers;
 
 import br.com.kevensouza.server.models.MenuModel;
-import br.com.kevensouza.server.models.ConfigModel;
 import br.com.kevensouza.server.repositories.MenuRepository;
-import br.com.kevensouza.server.repositories.ConfigRepository;
 import br.com.kevensouza.server.repositories.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +23,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class MenuController {
     private final UserRepository userRepository;
     private final MenuRepository menuRepository;
-    private final ConfigRepository configRepository;
 
     @PostMapping("/create/{userId}")
-    public ResponseEntity<Object> Create(@PathVariable(value = "userId") UUID userId, @RequestBody @Valid MenuModel body, ConfigModel config) {
+    public ResponseEntity<Object> Create(@PathVariable(value = "userId") UUID userId, @RequestBody @Valid MenuModel body) {
         var user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         body.setUser(user);
 
@@ -40,15 +37,7 @@ public class MenuController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("this code is already in use.");
         }
 
-        config.setBackgroundColor("white");
-        config.setFontColor("black");
-        config.setFontSize(12);
-
-        var menu = menuRepository.save(body);
-
-        config.setMenu(menu);
-        configRepository.save(config);
-
+        menuRepository.save(body);
         return ResponseEntity.status(HttpStatus.CREATED).body("successfully created!");
     }
 
