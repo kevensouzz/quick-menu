@@ -1,0 +1,35 @@
+@if (menuFound) {
+<main>
+
+  @for (option of options; track $index) {
+  <article>
+    <span class="bg"></span>
+    <span class="info">
+      <span>
+        <h1>{{ option.name }}</h1>
+        <h1>R${{ option.price }}</h1>
+      </span>
+      <p class="description">{{ option.description }}</p>
+      <h1>{{ option.avaliability && "DISPONÍVEL." }}</h1>
+    </span>
+  </article>
+  }
+
+  <a id="scan-link" class="no-focus" routerLink="/scan">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-from-line">
+      <path d="m9 6-6 6 6 6" />
+      <path d="M3 12h14" />
+      <path d="M21 19V5" />
+    </svg>
+  </a>
+</main>
+} @else {
+<main id="not-found">
+  <div>
+    <h1>404!</h1>
+    <p>Oops! The page you're looking for does not exist.</p>
+    <a class="no-focus" routerLink="/scan">Back to Scan</a>
+  </div>
+</main>
+}

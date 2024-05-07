@@ -35,13 +35,6 @@ main {
   main {
     #account-link {
       cursor: default;
-    }
-  }
-}
-
-@media screen and (max-width: 425px) {
-  main {
-    #account-link {
       right: 1rem;
       bottom: 1rem;
     }

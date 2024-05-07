@@ -6,11 +6,13 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { AccountComponent } from './pages/account/account.component';
+import { MenuComponent } from './pages/menu/menu.component';
 
 export const routes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "", pathMatch: "full", redirectTo: "home" },
   { path: "scan", component: ScanComponent },
+  { path: "scan/:code", component: MenuComponent },
   { path: "generate", component: GenerateComponent },
   { path: "generate/account", component: AccountComponent },
   { path: "generate/auth", component: AuthComponent },
