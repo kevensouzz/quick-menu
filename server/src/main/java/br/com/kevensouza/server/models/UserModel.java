@@ -5,11 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,11 +17,12 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserModel extends RepresentationModel<UserModel> implements UserDetails {
+public class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userId;
@@ -34,7 +31,7 @@ public class UserModel extends RepresentationModel<UserModel> implements UserDet
     private String username;
     private String password;
     private UserRole role;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user", "links"})
     private List<MenuModel> menus = new ArrayList<>();
 
