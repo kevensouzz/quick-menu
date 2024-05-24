@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("menus/{menuId}/options")
+@RequestMapping("/menus/{menuId}/options")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class OptionController {

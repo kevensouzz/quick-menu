@@ -12,38 +12,37 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/menus")
 @CrossOrigin(origins = "http://localhost:4200")
 public class MenuController {
     private final MenuService menuService;
 
-    @PostMapping
-    public ResponseEntity<MenuModel> create(@RequestBody @Valid MenuModel body) {
-        return menuService.create(body);
+    @PostMapping("/users/{userId}/menus")
+    public ResponseEntity<MenuModel> create(@PathVariable("userId") UUID userId, @RequestBody @Valid MenuModel body) {
+        return menuService.create(userId, body);
     }
 
-    @GetMapping
+    @GetMapping("/menus")
     public ResponseEntity<List<MenuModel>> readAll() {
         return menuService.readAll();
     }
 
-    @GetMapping("/id/{menuId}")
+    @GetMapping("/menus/id/{menuId}")
     public ResponseEntity<MenuModel> readById(@PathVariable("menuId") UUID menuId) {
         return menuService.readById(menuId);
     }
 
-    @GetMapping("/code/{code}")
+    @GetMapping("/menus/code/{code}")
     public ResponseEntity<MenuModel> ReadByCode(@PathVariable("code") String code) {
         return menuService.readByCode(code);
     }
 
-    @PatchMapping("/{menuId}")
+    @PatchMapping("/menus/{menuId}")
     public ResponseEntity<MenuModel> update(@PathVariable("menuId") UUID menuId, @RequestBody @Valid MenuModel body) {
         return menuService.update(menuId, body);
     }
 
-    @DeleteMapping("/{menuId}")
-    public ResponseEntity<Void> delete(@PathVariable("menuId") UUID menuId) {
-        return menuService.delete(menuId);
+    @DeleteMapping("/users/{userId}/menus/{menuId}")
+    public ResponseEntity<Void> delete(@PathVariable("userId") UUID userId, @PathVariable("menuId") UUID menuId) {
+        return menuService.delete(userId, menuId);
     }
 }

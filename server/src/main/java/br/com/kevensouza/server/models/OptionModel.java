@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "options")
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,10 +16,20 @@ import java.util.UUID;
 public class OptionModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(unique = true, nullable = false, updatable = false)
     private UUID optionId;
+
+    @Column(columnDefinition = "text", nullable = false)
     private String name;
+
+    @Column(columnDefinition = "text", nullable = false)
     private String description;
+
     private byte[] picture;
+
+    @Column(precision = 5, scale = 2, nullable = false)
     private BigDecimal price;
+
+    @Column(nullable = false)
     private Boolean avaliability;
 }

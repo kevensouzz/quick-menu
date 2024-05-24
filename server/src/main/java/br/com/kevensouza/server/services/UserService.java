@@ -8,11 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -29,27 +32,31 @@ public class UserService {
         this.authenticationManager = authenticationManager;
     }
 
-    public ResponseEntity<String> register(UserModel body) {
+    public ResponseEntity<Map<String, String>> register(UserModel body) {
         if (body.getEmail() == null || body.getUsername() == null || body.getPassword() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else if (userRepository.findByUsername(body.getUsername()) != null || userRepository.findByEmail(body.getEmail()) != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else if (body.getUsername().length() > 16 || body.getUsername().length() < 3 || body.getPassword().length() < 8) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                    .build();
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         } else if (body.getRole() != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+
         var usernamePassword = new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword());
         body.setRole(UserRole.USER);
         body.setPassword(passwordEncoder.encode(body.getPassword()));
         userRepository.save(body);
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-        return ResponseEntity.ok(token);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+
+        return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<String> login(UserModel body) {
+    public ResponseEntity<Map<String, String>> login(UserModel body) {
         if (
                 userRepository.findByUsername(body.getUsername()) == null
                         ||
@@ -61,7 +68,11 @@ public class UserService {
         var usernamePassword = new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-        return ResponseEntity.ok(token);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+
+        return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<Boolean> checkPassword(UUID userId, UserModel body) {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,13 +26,25 @@ import java.util.UUID;
 public class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(unique = true, nullable = false, updatable = false)
     private UUID userId;
+
     @Email
+    @Column(columnDefinition = "text", nullable = false)
     private String email;
+
+    @Column(columnDefinition = "VARCHAR(16)", nullable = false)
+    @Size(min = 3, max = 16)
     private String username;
+
+    @Column(columnDefinition = "text", nullable = false)
     private String password;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(columnDefinition = "smallint", nullable = false)
     private UserRole role;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"user", "links"})
     private List<MenuModel> menus = new ArrayList<>();
 
