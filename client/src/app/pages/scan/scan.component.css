@@ -9,36 +9,47 @@ main {
     overflow: hidden;
     gap: 2rem;
 
-    .filter-search {
-        width: fit-content;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
+    #search {
+        font-size: 1.25rem;
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid red;
+        padding: 0.3rem 0.5rem;
+        color: red;
 
-        input {
-            font-size: 1.25rem;
-            background-color: transparent;
-            border: none;
-            border-bottom: 2px solid red;
-            padding: 0.3rem 0.5rem;
-            color: red;
-
-            &::placeholder {
-                color: rgba(255, 0, 0, 0.5);
-            }
-
-            &::selection {
-                color: black;
-                background-color: red;
-            }
-
-            &::-webkit-search-cancel-button {
-                -webkit-appearance: none;
-            }
+        &::placeholder {
+            color: rgba(255, 0, 0, 0.5);
         }
 
-        svg {
-            cursor: pointer;
+        &::selection {
+            color: black;
+            background-color: red;
+        }
+
+        &::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+    }
+
+    .not-menu {
+        width: 90%;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        h1 {
+            color: red;
+            font-size: 2.25rem;
+            line-height: 0.85;
+        }
+
+        a {
+            color: red;
+            text-decoration: underline 1px;
+            font-size: 1.25rem;
         }
     }
 
@@ -108,7 +119,7 @@ main {
     main {
         padding-top: 60px 10px 10px;
 
-        .filter-search input {
+        #search {
             max-width: 280px;
             font-size: 1rem;
             padding: 0.2rem 0.25rem;
@@ -136,15 +147,8 @@ main {
 
 @media screen and (max-width: 425px) {
     main {
-        .filter-search {
-            input {
-                font-size: 0.75rem;
-            }
-
-            svg {
-                width: 18px;
-                height: 18px;
-            }
+        #search {
+            font-size: 0.75rem;
         }
 
         .content .menu {

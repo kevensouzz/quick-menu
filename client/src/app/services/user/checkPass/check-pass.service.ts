@@ -13,7 +13,7 @@ export class CheckPassService {
   ) { }
 
   checkPass(password: string, id: string) {
-    const url = `http://localhost:8080/users/checkPass/${id}`;
+    const url = `http://localhost:8080/users/check-password/${id}`;
     const body = { password };
 
     return this.http.post(url, body, {

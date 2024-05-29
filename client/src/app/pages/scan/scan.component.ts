@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -5,7 +6,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-scan',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './scan.component.html',
   styleUrl: './scan.component.css'
 })
@@ -38,7 +39,7 @@ export class ScanComponent {
   }
 
   loadMenus() {
-    this.http.get("http://localhost:8080/menus/all")
+    this.http.get("http://localhost:8080/menus")
       .subscribe((menus: any) => {
         this.menusData = menus
         this.menuFilter()

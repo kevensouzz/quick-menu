@@ -30,7 +30,7 @@ export class AuthComponent {
     private toast: ToastrService,
     private http: HttpClient
   ) {
-    this.http.get("http://localhost:8080/users/all")
+    this.http.get("http://localhost:8080/users")
       .subscribe()
 
     this.register = new FormGroup({

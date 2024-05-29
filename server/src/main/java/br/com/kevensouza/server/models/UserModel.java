@@ -30,10 +30,16 @@ public class UserModel implements UserDetails {
     private UUID userId;
 
     @Email
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(unique = true, columnDefinition = "text", nullable = false)
     private String email;
 
-    @Column(columnDefinition = "VARCHAR(16)", nullable = false)
+    private byte[] picture;
+
+    @Column(unique = true, columnDefinition = "VARCHAR(11)", nullable = false)
+    @Size(min = 11, max = 11)
+    private String cpf;
+
+    @Column(unique = true, columnDefinition = "VARCHAR(16)", nullable = false)
     @Size(min = 3, max = 16)
     private String username;
 
@@ -44,9 +50,9 @@ public class UserModel implements UserDetails {
     @Column(columnDefinition = "smallint", nullable = false)
     private UserRole role;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties({"user", "links"})
-    private List<MenuModel> menus = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("users")
+    private List<EateryModel> eateries = new ArrayList<>();
 
     @Override
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -22,7 +22,7 @@ public class OptionModel {
     @Column(columnDefinition = "text", nullable = false)
     private String name;
 
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(columnDefinition = "text")
     private String description;
 
     private byte[] picture;

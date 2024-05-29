@@ -16,9 +16,9 @@ import java.util.UUID;
 public class MenuController {
     private final MenuService menuService;
 
-    @PostMapping("/users/{userId}/menus")
-    public ResponseEntity<MenuModel> create(@PathVariable("userId") UUID userId, @RequestBody @Valid MenuModel body) {
-        return menuService.create(userId, body);
+    @PostMapping("/eateries/{eateryId}/menus")
+    public ResponseEntity<MenuModel> create(@PathVariable("eateryId") UUID eateryId, @RequestBody @Valid MenuModel body) {
+        return menuService.create(eateryId, body);
     }
 
     @GetMapping("/menus")
@@ -26,14 +26,9 @@ public class MenuController {
         return menuService.readAll();
     }
 
-    @GetMapping("/menus/id/{menuId}")
+    @GetMapping("/menus/{menuId}")
     public ResponseEntity<MenuModel> readById(@PathVariable("menuId") UUID menuId) {
         return menuService.readById(menuId);
-    }
-
-    @GetMapping("/menus/code/{code}")
-    public ResponseEntity<MenuModel> ReadByCode(@PathVariable("code") String code) {
-        return menuService.readByCode(code);
     }
 
     @PatchMapping("/menus/{menuId}")
@@ -41,8 +36,13 @@ public class MenuController {
         return menuService.update(menuId, body);
     }
 
-    @DeleteMapping("/users/{userId}/menus/{menuId}")
-    public ResponseEntity<Void> delete(@PathVariable("userId") UUID userId, @PathVariable("menuId") UUID menuId) {
-        return menuService.delete(userId, menuId);
+    @PatchMapping("/menus/picture/{menuId}")
+    public ResponseEntity<MenuModel> updatePicture(@PathVariable("menuId") UUID menuId, @RequestBody @Valid MenuModel body) {
+        return menuService.updatePicture(menuId, body);
+    }
+
+    @DeleteMapping("/eateries/{eateryId}/menus/{menuId}")
+    public ResponseEntity<Void> delete(@PathVariable("eateryId") UUID eateryId, @PathVariable("menuId") UUID menuId) {
+        return menuService.delete(eateryId, menuId);
     }
 }

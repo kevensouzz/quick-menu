@@ -2,6 +2,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2.5rem;
   padding: 80px 10px 10px;
   height: 100dvh;
 
@@ -14,12 +15,19 @@ main {
     display: flex;
     height: 300px;
     width: 800px;
-    
+
     .bg {
       width: 300px;
       height: 100%;
-      background: white;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 75%;
+        height: 75%;
+      }
     }
 
     .info {
@@ -73,7 +81,7 @@ main {
   }
 }
 
-#not-found {
+.not {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,23 +109,108 @@ main {
   }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 1024px) {
   main {
-    padding: 60px 10px 10px;
+    article {
+      width: 600px;
+      height: 250px;
+
+      .bg {
+        width: 250px;
+      }
+
+      .info {
+        width: 350px;
+        gap: 1rem;
+        padding: 1rem;
+      }
+    }
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 640px) {
   main {
+    padding: 60px 10px 10px;
+
+    article {
+      width: 400px;
+      height: 150px;
+
+      .bg {
+        width: 150px;
+      }
+
+      .info {
+        width: 250px;
+        gap: 0.25rem;
+        padding: 0.5rem;
+
+        span {
+          gap: 1rem;
+        }
+
+        h1 {
+          font-size: 1rem;
+        }
+
+        p {
+          font-size: 0.75rem;
+        }
+      }
+    }
+
     #scan-link {
       cursor: default;
       right: 1rem;
       bottom: 1rem;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid transparent;
+
+      &:hover,
+      &:focus-visible {
+        border: 1px solid white;
+      }
+
+      svg {
+        position: absolute;
+        bottom: 4px;
+        left: 0.15rem;
+        width: 22.5px;
+        height: 22.5px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  main article {
+    width: 280px;
+    height: 100px;
+
+    .bg {
+      width: 100px;
+    }
+
+    .info {
+      width: 180px;
+      padding: 0.25rem;
+
+      span {
+        gap: 0.5rem;
+      }
+
+      h1 {
+        font-size: 0.75rem;
+      }
+
+      p {
+        font-size: 0.5rem;
+      }
     }
   }
 
-  #not-found div {
-
+  .not div {
     h1 {
       font-size: 3rem;
     }

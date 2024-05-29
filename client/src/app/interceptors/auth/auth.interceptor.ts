@@ -41,6 +41,8 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
 
     case "/generate":
     case "/generate/account":
+    case "/generate/update":
+    case "/generate/new":
       if (token) {
         try {
           let decodedToken = jwtDecode(token)

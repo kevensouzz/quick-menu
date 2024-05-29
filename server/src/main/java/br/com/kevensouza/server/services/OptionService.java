@@ -7,8 +7,10 @@ import br.com.kevensouza.server.repositories.OptionRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,6 +23,7 @@ public class OptionService {
         this.optionRepository = optionRepository;
     }
 
+    @Transactional
     public ResponseEntity<OptionModel> create(UUID menuId, OptionModel option) {
         MenuModel menu = menuRepository.findById(menuId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -28,12 +31,21 @@ public class OptionService {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }
 
-        var optionSaved = optionRepository.save(option);
+        OptionModel optionSaved = optionRepository.save(option);
 
         menu.getOptions().add(optionSaved);
         menuRepository.save(menu);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(optionSaved);
+    }
+
+    public ResponseEntity<List<OptionModel>> readAll() {
+        return ResponseEntity.ok(optionRepository.findAll());
+    }
+
+    public ResponseEntity<OptionModel> readById(UUID optionId) {
+        OptionModel option = optionRepository.findById(optionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return ResponseEntity.ok(option);
     }
 
     public ResponseEntity<OptionModel> update(UUID optionId, OptionModel body) {
@@ -55,19 +67,27 @@ public class OptionService {
             option.setPrice(body.getPrice());
         }
 
-        if (body.getPicture() != null) {
-            option.setPicture(body.getPicture());
-        }
-
-        optionRepository.save(option);
-        return ResponseEntity.ok(option);
+        return ResponseEntity.ok(optionRepository.save(option));
     }
 
+    public ResponseEntity<OptionModel> updatePicture(UUID optionId, OptionModel body) {
+        OptionModel option = optionRepository.findById(optionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        option.setPicture(body.getPicture());
+
+        return ResponseEntity.ok(optionRepository.save(option));
+    }
+
+    @Transactional
     public ResponseEntity<Void> delete(UUID menuId, UUID optionId) {
         MenuModel menu = menuRepository.findById(menuId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         OptionModel option = optionRepository.findById(optionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         menu.getOptions().remove(option);
         menuRepository.save(menu);
+
+        optionRepository.delete(option);
+
         return ResponseEntity.noContent().build();
     }
 }

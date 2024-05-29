@@ -48,6 +48,11 @@ public class UserController {
         return userService.update(userId, body);
     }
 
+    @PatchMapping("/picture/{userId}")
+    public ResponseEntity<UserModel> updatePicture(@PathVariable("userId") UUID userId, @RequestBody @Valid UserModel body) {
+        return userService.updatePicture(userId, body);
+    }
+
     @PatchMapping("/password/{userId}")
     public ResponseEntity<UserModel> updatePassword(@PathVariable("userId") UUID userId, @RequestBody @Valid UserModel body) {
         return userService.updatePassword(userId, body);

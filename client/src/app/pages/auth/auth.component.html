@@ -34,11 +34,11 @@
       </div>
 
       <div class="buttons">
-        <button type="submit" [className]="register.valid && 'enable'" [disabled]="!register.valid">
-          CADASTRAR
+        <button type="submit" [className]="register.valid && 'enabled'" [disabled]="!register.valid">
+          REGISTER
         </button>
         <button type="button" (click)="toggleHasAccount()">
-          CONTA EXISTENTE
+          EXISTENT ACCOUNT
         </button>
       </div>
       } @else if (hasAccount) {
@@ -56,11 +56,11 @@
       </div>
 
       <div class="buttons">
-        <button type="submit" [className]="login.valid && 'enable'" [disabled]="!login.valid">
-          LOGAR
+        <button type="submit" [className]="login.valid && 'enabled'" [disabled]="!login.valid">
+          LOGIN
         </button>
         <button type="button" (click)="toggleHasAccount()">
-          CONTA NOVA
+          NEW ACCOUNT
         </button>
       </div>
       }

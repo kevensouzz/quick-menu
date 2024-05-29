@@ -88,7 +88,7 @@ export class AdminComponent {
   }
 
   loadUsers() {
-    this.http.get("http://localhost:8080/users/all", {
+    this.http.get("http://localhost:8080/users", {
       headers: {
         "Authorization": `Bearer ${this.cookie.get("token")}`
       }
@@ -179,7 +179,7 @@ export class AdminComponent {
     if (this.selectedUser?.role == "ADMIN") {
       return this.toast.error("Can Not Touch An Admin!")
     } else {
-      return this.http.delete(`http://localhost:8080/users/delete/${id}`, {
+      return this.http.delete(`http://localhost:8080/users/${id}`, {
         headers: {
           Authorization: `Bearer ${this.cookie.get("token")}`
         }

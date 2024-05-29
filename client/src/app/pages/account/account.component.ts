@@ -8,7 +8,6 @@ import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CheckPassService } from '../../services/user/checkPass/check-pass.service';
-import { AuthService } from '../../services/user/auth/auth.service';
 
 interface ExtendedJwtPayload extends JwtPayload {
   id?: string;
@@ -61,7 +60,7 @@ export class AccountComponent {
       this.userId = jwtDecode<ExtendedJwtPayload>(this.token).id;
     }
 
-    this.http.get<UserInterface>(`http://localhost:8080/users/id/${this.userId}`, {
+    this.http.get<UserInterface>(`http://localhost:8080/users/${this.userId}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -173,7 +172,7 @@ export class AccountComponent {
         this.passwordMatch = data
 
         if (this.passwordMatch) {
-          this.http.delete(`http://localhost:8080/users/delete/${id}`, {
+          this.http.delete(`http://localhost:8080/users/${id}`, {
             headers: {
               Authorization: `Bearer ${this.token}`
             }

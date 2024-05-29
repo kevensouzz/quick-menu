@@ -162,7 +162,6 @@ main {
       }
 
       .user-modal {
-        display: none;
         position: fixed;
         z-index: 3;
         inset: 0;

@@ -121,8 +121,8 @@ main {
           cursor: default;
         }
 
-        button[type="submit"].enable:hover,
-        button[type="submit"].enable:focus-visible {
+        button[type="submit"].enabled:hover,
+        button[type="submit"].enabled:focus-visible {
           background-color: red;
           border: red 3px solid;
           color: white;
