@@ -30,6 +30,8 @@ public class MenuService {
 
         if (body.getName().isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        } else if (eatery.getMenus().stream().anyMatch(menu -> menu.getName().equalsIgnoreCase(body.getName()))) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
         MenuModel menuSaved = menuRepository.save(body);

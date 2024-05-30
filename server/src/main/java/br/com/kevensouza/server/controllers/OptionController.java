@@ -17,8 +17,8 @@ public class OptionController {
     private final OptionService optionService;
 
     @PostMapping("/menus/{menuId}/options")
-    public ResponseEntity<OptionModel> create(@PathVariable("menuId") UUID menuId, @RequestBody @Valid OptionModel option) {
-        return optionService.create(menuId, option);
+    public ResponseEntity<OptionModel> create(@PathVariable("menuId") UUID menuId, @RequestBody @Valid OptionModel body) {
+        return optionService.create(menuId, body);
     }
 
     @GetMapping("/options")

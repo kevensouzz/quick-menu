@@ -87,8 +87,7 @@ public class EateryService {
     public ResponseEntity<EateryModel> update(UUID EateryId, EateryModel body) {
         EateryModel eatery = eateryRepository.findById(EateryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (eateryRepository.existsByName(body.getName())
-                || eateryRepository.existsByName(body.getName())) {
+        if (eateryRepository.existsByName(body.getName())) {
 
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
 
@@ -141,7 +140,11 @@ public class EateryService {
         }
 
         eatery.getUsers().remove(removeUser);
-        eateryRepository.save(eatery);
+        if (eatery.getUsers().isEmpty()) {
+            eateryRepository.delete(eatery);
+        } else {
+            eateryRepository.save(eatery);
+        }
 
         removeUser.getEateries().remove(eatery);
         userRepository.save(removeUser);
@@ -164,6 +167,7 @@ public class EateryService {
         }
 
         eatery.getUsers().clear();
+        eatery.getMenus().clear();
         eateryRepository.delete(eatery);
 
         return ResponseEntity.noContent().build();

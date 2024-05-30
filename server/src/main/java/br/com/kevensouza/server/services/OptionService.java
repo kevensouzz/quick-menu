@@ -24,14 +24,16 @@ public class OptionService {
     }
 
     @Transactional
-    public ResponseEntity<OptionModel> create(UUID menuId, OptionModel option) {
+    public ResponseEntity<OptionModel> create(UUID menuId, OptionModel body) {
         MenuModel menu = menuRepository.findById(menuId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (option.getAvaliability() == null || option.getName().isEmpty() || option.getDescription().isEmpty() || option.getPrice() == null) {
+        if (body.getAvaliability() == null || body.getName().isEmpty() || body.getDescription().isEmpty() || body.getPrice() == null) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        } else if (menu.getOptions().stream().anyMatch(option -> option.getName().equalsIgnoreCase(body.getName()))) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
-        OptionModel optionSaved = optionRepository.save(option);
+        OptionModel optionSaved = optionRepository.save(body);
 
         menu.getOptions().add(optionSaved);
         menuRepository.save(menu);
