@@ -30,15 +30,15 @@ public class EateryModel {
     @Column(columnDefinition = "text")
     private String description;
 
-    @Column(columnDefinition = "VARCHAR(16)", nullable = false)
-    @Size(min= 12, max = 16)
+    @Column(columnDefinition = "VARCHAR(11)", nullable = false)
+    @Size(min= 11, max = 11)
     private String phone;
 
     @Column(columnDefinition = "text", nullable = false)
     private String address;
 
-    @Column(columnDefinition = "VARCHAR(14)", nullable = false)
-    @Size(min = 14, max = 14)
+    @Column(columnDefinition = "VARCHAR(18)", nullable = false)
+    @Size(min = 14, max = 18)
     private String cnpj;
 
     @ManyToMany(fetch = FetchType.EAGER)

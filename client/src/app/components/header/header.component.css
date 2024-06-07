@@ -8,6 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  backdrop-filter: blur(0.1rem);
 
   #navbar {
     display: flex;

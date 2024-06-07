@@ -54,7 +54,8 @@ public class UserService {
         } else if (body.getUsername().length() > 16 ||
                 body.getUsername().length() < 3 ||
                 body.getPassword().length() < 8 ||
-                body.getCpf().length() != 11) {
+                body.getCpf().length() < 11 ||
+                body.getCpf().length() > 14) {
 
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 

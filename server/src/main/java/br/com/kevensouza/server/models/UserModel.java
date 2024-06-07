@@ -35,8 +35,8 @@ public class UserModel implements UserDetails {
 
     private byte[] picture;
 
-    @Column(unique = true, columnDefinition = "VARCHAR(11)", nullable = false)
-    @Size(min = 11, max = 11)
+    @Column(unique = true, columnDefinition = "VARCHAR(14)", nullable = false)
+    @Size(min = 11, max = 14)
     private String cpf;
 
     @Column(unique = true, columnDefinition = "VARCHAR(16)", nullable = false)
